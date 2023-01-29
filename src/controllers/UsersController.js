@@ -1,4 +1,5 @@
 const UsersModel = require("../models/UsersModel");
+const { validationResult } = require("express-validator");
 
 
 const UsersController = {
@@ -13,9 +14,13 @@ const UsersController = {
 
   },
   processRegister:(req, res)=>{
+    const resultValidations = validationResult(req);
 
-    return res.send("Usuário registrado!");
+    if(resultValidations.errors.length > 0){
+      return res.render("userRegisterForm.ejs", {errors:resultValidations.mapped(), old:req.body})
+    }
 
+    return res.send("Informações enviadas com sucesso!");
   }
 }
 

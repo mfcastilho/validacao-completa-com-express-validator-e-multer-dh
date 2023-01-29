@@ -19,6 +19,10 @@ app.set("views", path.resolve("src", "views"));
 //=== MIDDLEWARES ===
 app.use(express.json());
 app.use(express.static(path.resolve("src", "public")));
+
+/*Para podermos enxergar e ler corretamente 
+as informações enviadas de um formulário
+devemos usar o middleware express.urlencoded*/
 app.use(express.urlencoded({ extended:false }));
 
 

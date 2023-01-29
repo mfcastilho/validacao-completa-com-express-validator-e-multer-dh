@@ -17,6 +17,7 @@
     .div-child form{
       width: 50%;
       margin: 80px;
+      border: 1px solid  #CCC;
     }
 
     .container h2{
@@ -33,7 +34,7 @@
     .container input{
       width: 90%;
       height: 40px;
-      margin: 0 5% 20px 5%;
+      margin: 0 5%;
       padding-left: 10px;
       font-size: 18px;
       background-color: #F2F1F2;
@@ -60,25 +61,52 @@
       cursor: pointer;
     }
 
+    .danger{
+      margin: 0 5%;
+      color: red;
+      margin-bottom: 20px;
+      
+    }
+
   </style>
 </head>
 <body>
   <div>
     <div class="div-child">
-      <form method="POST" action="/user/register" enctype="multipart/form-data" style="border: 1px solid  #CCC;">
+      <form method="POST" action="/">
 
         <div class="container">
           <h2>Registro de usuário</h2>
           <hr>
 
           <label for="name">Nome completo</label>
-          <input type="text" name="name" id="name">
+          <input type="text" name="name" id="name" value="<%= locals.old ? old.name : "" %>">
 
+          <% if(locals.errors && errors.name){ %>
+            <div class="danger">
+              <%= errors.name.msg %>
+            </div>
+          <% } %> 
+          
+
+          
           <label for="email">Email</label>
-          <input type="email" name="email" id="email">
+          <input type="text" name="email" id="email" value="<%= locals.old ? old.email : "" %>">
+
+          <% if(locals.errors && errors.email){ %>
+            <div class="danger">
+              <%= errors.email.msg %> 
+            </div>
+          <% } %> 
 
           <label for="password">Senha</label>
           <input type="password" name="password" id="password">
+
+          <% if(locals.errors && errors.password){ %>
+            <div class="danger">
+              <%= errors.password.msg %> 
+            </div>
+          <% } %> 
 
           <!-- <label for="confirm-password">Confirme a senha</label>
           <input type="password" name="confirm-password" id="confirm-password"> -->
