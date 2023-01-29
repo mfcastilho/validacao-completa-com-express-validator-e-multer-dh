@@ -10,6 +10,16 @@ const { check } = require("express-validator");
 const UsersController = require("../controllers/UsersController");
 const { isString } = require("util");
 
+const storage = multer.diskStorage({
+  destination:(req, file, callback)=>{
+    callback(null, "src/public/images");
+  },
+  filename:(req, file, callback)=>{
+    callback(null, `${Date.now()}_img_${file.originalname}`);
+  }
+});
+
+const uploadFile = multer({ storage:storage });
 
 const validations = [
   check("name")
@@ -22,19 +32,25 @@ const validations = [
 
   check("password")
     .notEmpty().withMessage("O campo senha NÃO pode ser enviado vazio!").bail()
-    .isLength({ min:6 }).withMessage("A senha precisa ter no mínimo 6 caracteres!")
+    .isLength({ min:6 }).withMessage("A senha precisa ter no mínimo 6 caracteres!"),
+
+  check("avatar").custom((value, {req})=>{
+    let file = req.file;
+    let acceptedExtentions = [".jpg", ".png", ".gif"];
+
+    if(!file){
+      throw new Error("Precisa escolher um arquivo");
+    }else{
+      let fileExtension = path.extname(file.originalname);
+      if(!acceptedExtentions.includes(fileExtension)){
+        throw new Error(`As extensões permitidas são ${acceptedExtentions.join(", ")}`);
+      }
+    }
+    return true;
+  })  
 ];
 
-const storage = multer.diskStorage({
-  destination:(req, file, callback)=>{
-    callback(null, "src/public/images");
-  },
-  filename:(req, file, callback)=>{
-    callback(null, `${Date.now()}_img_${file.originalname}`);
-  }
-});
 
-const uploadFile = multer({ storage:storage });
 
 
 

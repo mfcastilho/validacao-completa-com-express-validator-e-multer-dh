@@ -118,6 +118,12 @@
           <label for="avatar">Imagem de Perfil</label>
           <input type="file" name="avatar">
 
+          <% if(locals.errors && errors.avatar){ %>
+            <div class="danger">
+              <%= errors.avatar.msg %> 
+            </div>
+          <% } %> 
+
           <div class="clearfix">
             <button type="submit" class="signupbtn" style="font-size: 26px;"><b>Register</b></button>
           </div>
