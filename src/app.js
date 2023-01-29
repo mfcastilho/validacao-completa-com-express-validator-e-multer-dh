@@ -23,7 +23,7 @@ app.use(express.urlencoded({ extended:false }));
 
 
 //=== ROTAS ===
-app.get(userRoutes);
+app.use(userRoutes);
 
 
 //=== CONFIGURAÇÃO DO SERVIDOR ===

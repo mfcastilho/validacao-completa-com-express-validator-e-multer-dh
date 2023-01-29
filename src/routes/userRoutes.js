@@ -20,7 +20,7 @@ const uploadFile = multer({ storage:storage });
 //GET home page
 router.get("/", UsersController.showHomePage);
 
-router.post("/");
+// router.post("/");
 
 
 
