@@ -25,16 +25,16 @@ const validations = [
     .isLength({ min:6 }).withMessage("A senha precisa ter no mínimo 6 caracteres!")
 ];
 
-// const storage = multer.diskStorage({
-//   destination:(req, file, callback)=>{
-//     callback(null, path.resolve("src","public","images"));
-//   },
-//   filename:(req, file, callback)=>{
-//     callback(null, `${Date.now()}_img_${file.originalname}`);
-//   }
-// });
+const storage = multer.diskStorage({
+  destination:(req, file, callback)=>{
+    callback(null, "src/public/images");
+  },
+  filename:(req, file, callback)=>{
+    callback(null, `${Date.now()}_img_${file.originalname}`);
+  }
+});
 
-// const uploadFile = multer({ storage:storage });
+const uploadFile = multer({ storage:storage });
 
 
 
@@ -43,7 +43,7 @@ router.get("/",UsersController.showHomePage);
 
 
 //Processar o registro
-router.post("/", validations, UsersController.processRegister);
+router.post("/", uploadFile.single("avatar"), validations, UsersController.processRegister);
 
 
 
